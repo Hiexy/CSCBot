@@ -16,6 +16,7 @@ for d in dict_list:
     new_dict['ID'] = d['What is your Student ID?']
     new_dict['class'] = d['What level of training would you like to receive?'].split()[0]
     new_dict['token'] = str(uuid.uuid4())
+    new_dict['registered'] = ''
     new_list.append(new_dict)
 
 

@@ -1,20 +1,51 @@
 import uuid
 import csv
 
-reader = csv.DictReader(open('sheet.csv', 'r', encoding="utf8"))
+readerm = csv.DictReader(open('members_sheet.csv', 'r', encoding="utf8"))
+readerb = csv.DictReader(open('beginners_sheet.csv', 'r', encoding="utf8"))
+readeri = csv.DictReader(open('intermediate_sheet.csv', 'r', encoding="utf8"))
 
-dict_list = []
+members_dict_list = []
+beg_dict_list = []
+int_dict_list = []
 
-for line in reader:
-    dict_list.append(line)
+for line in readerm:
+    members_dict_list.append(line)
+
+for line in readerb:
+    beg_dict_list.append(line)
+
+for line in readeri:
+    int_dict_list.append(line)
 
 new_list = []
-for d in dict_list:
+for d in members_dict_list:
     new_dict = dict()
-    new_dict['name'] = d['What is your Name?']
+    new_dict['name'] = d['What is your Name?'].split()[0] + ' ' + d['What is your Name?'].split()[-1]
     new_dict['email'] = d['Email address']
+    new_dict['number'] = d['What is your Phone Number?']
     new_dict['ID'] = d['What is your Student ID?']
-    new_dict['class'] = d['What level of training would you like to receive?'].split()[0]
+    new_dict['major'] = d['What is your Major?']
+    new_dict['class'] = ''
+    if d['What level of training would you like to receive?'].split()[0] == 'Beginner':
+        for b in beg_dict_list:
+            if new_dict['ID'] == b['What is Your Student ID?']:
+                new_dict['class'] = f'Beginner/{b["Which Session would you like to join?"].split()[0]}'
+                del b
+                break
+
+    elif d['What level of training would you like to receive?'].split()[0] == 'Intermediate':
+        
+        for i in int_dict_list:
+            if new_dict['ID'] == i['What is your Student ID?']:
+                new_dict['class'] = 'Intermediate/Thursday'
+                del i
+                break
+    else:
+        new_dict['class'] = 'None'
+    
+    if new_dict['class'] == '':
+        new_dict['class'] = 'None'
     new_dict['token'] = str(uuid.uuid4())
     new_dict['registered'] = ''
     new_list.append(new_dict)

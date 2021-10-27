@@ -33,7 +33,7 @@ for i in int_dict_list:
 
 for d in members_dict_list:
     new_dict = dict()
-    new_dict['name'] = d['What is your Name?'].split()
+    new_dict['name'] = d['What is your Name?']
     new_dict['email'] = d['Email address']
     new_dict['number'] = d['What is your Phone Number?']
     new_dict['ID'] = d['What is your Student ID?']
